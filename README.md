@@ -1,6 +1,6 @@
 # Game Title
 ## Author:
-
+Kamil Kowalski
 ### Short description
 
 
