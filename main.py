@@ -23,6 +23,24 @@ mixer.music.load("data/crash.mp3")
 mixer.music.set_volume(0.0)
 
 obstaclesPositons = [95, 270, 445]
+coinsPositons = [178, 353, 528]
+collected = False
+
+
+class Coins(pygame.sprite.Sprite):
+    def __init__(self):
+        super().__init__()
+        self.image = pygame.image.load("data/scaledCoin.png")
+        self.surface = pygame.Surface((self.image.get_width(), self.image.get_height()))
+        self.rect = self.surface.get_rect(center=(random.choice(coinsPositons), random.randint(-800, 0)))
+
+    def move(self, collected):
+        self.rect.move_ip(0, speed)
+        if (self.rect.bottom > SCREEN_HEIGHT) or collected:
+            self.rect.center = (random.choice(coinsPositons), random.randint(-800, 0))
+
+    def draw(self, surface):
+        surface.blit(self.image, self.rect)
 
 
 class Obstacle(pygame.sprite.Sprite):
@@ -60,7 +78,7 @@ class Player(pygame.sprite.Sprite):
             if pressedKeys[K_LEFT]:
                 self.rect.move_ip(-8, 0)
 
-        if self.rect.right < SCREEN_WIDTH-80:
+        if self.rect.right < SCREEN_WIDTH - 80:
             if pressedKeys[K_RIGHT]:
                 self.rect.move_ip(8, 0)
 
@@ -100,6 +118,12 @@ background = Background()
 # pygame.time.set_timer(INCREASE_SPEED, 3000)
 
 P1 = Player()
+playerGroup = pygame.sprite.Group()
+playerGroup.add(P1)
+
+coinsGroup = pygame.sprite.Group()
+coinsGroup.add(Coins())
+coinsGroup.add(Coins())
 
 obstacleGroup = pygame.sprite.Group()
 obstacleGroup.add(Obstacle())
@@ -134,6 +158,15 @@ while True:
     for obstacle in obstacleGroup:
         score = obstacle.move(score)
         obstacle.draw(window)
+
+    for coins in coinsGroup:
+        coins.move(collected)
+        if pygame.sprite.spritecollideany(coins, playerGroup):
+            collected = True
+            coins.move(collected)
+            window.blit(coins.image, coins.rect)
+            collected = False
+        coins.draw(window)
 
 
     window.blit(scoreRender, (0, 0))
