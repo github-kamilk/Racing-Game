@@ -56,11 +56,11 @@ class Player(pygame.sprite.Sprite):
     def update(self):
         pressedKeys = pygame.key.get_pressed()
 
-        if self.rect.left > 0:
+        if self.rect.left > 80:
             if pressedKeys[K_LEFT]:
                 self.rect.move_ip(-8, 0)
 
-        if self.rect.right < SCREEN_WIDTH:
+        if self.rect.right < SCREEN_WIDTH-80:
             if pressedKeys[K_RIGHT]:
                 self.rect.move_ip(8, 0)
 
@@ -115,7 +115,6 @@ while True:
     scoreRender = font.render("Score: " + str(score), True, red)
     background.update()
     background.render()
-    window.blit(scoreRender, (0, 0))
 
     for event in pygame.event.get():
         if event.type == QUIT:
@@ -136,6 +135,8 @@ while True:
         score = obstacle.move(score)
         obstacle.draw(window)
 
+
+    window.blit(scoreRender, (0, 0))
     P1.update()
     P1.draw(window)
 
