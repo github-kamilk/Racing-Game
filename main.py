@@ -20,7 +20,9 @@ SCREEN_WIDTH, SCREEN_HEIGHT = pygame.display.get_surface().get_size()
 
 mixer.init()
 mixer.music.load("data/crash.mp3")
-mixer.music.set_volume(0.1)
+mixer.music.set_volume(0.0)
+
+obstaclesPositons = [95, 270, 445]
 
 
 class Obstacle(pygame.sprite.Sprite):
@@ -28,12 +30,12 @@ class Obstacle(pygame.sprite.Sprite):
         super().__init__()
         self.image = pygame.image.load("data/scaledBlock.png")
         self.surface = pygame.Surface((self.image.get_width(), self.image.get_height()))
-        self.rect = self.surface.get_rect(center=(random.randint(100, 750), random.randint(-300, 0)))
+        self.rect = self.surface.get_rect(topleft=(random.choice(obstaclesPositons), random.randint(-800, 0)))
 
     def move(self, score):
         self.rect.move_ip(0, speed)
         if self.rect.bottom > SCREEN_HEIGHT:
-            self.rect.center = (random.randint(100, 750), random.randint(-300, 0))
+            self.rect.topleft = (random.choice(obstaclesPositons), random.randint(-800, 0))
             score += 1
         return score
 
@@ -93,18 +95,16 @@ class Background():
 
 background = Background()
 
-INCREASE_SPEED = pygame.USEREVENT + 1
-pygame.time.set_timer(INCREASE_SPEED, 3000)
+# Zwieksz predkosc co 3s
+# INCREASE_SPEED = pygame.USEREVENT + 1
+# pygame.time.set_timer(INCREASE_SPEED, 3000)
 
 P1 = Player()
-O1 = Obstacle()
-O2 = Obstacle()
-O3 = Obstacle()
 
 obstacleGroup = pygame.sprite.Group()
-obstacleGroup.add(O1)
-obstacleGroup.add(O2)
-obstacleGroup.add(O3)
+obstacleGroup.add(Obstacle())
+obstacleGroup.add(Obstacle())
+obstacleGroup.add(Obstacle())
 
 font = pygame.font.SysFont("Verdana", 60)
 gameOver = font.render("Game Over!", True, red)
@@ -121,15 +121,15 @@ while True:
         if event.type == QUIT:
             pygame.quit()
 
-        if event.type == INCREASE_SPEED:
-            speed += 0.5
+        # if event.type == INCREASE_SPEED:
+        #     speed += 0.5
 
     if pygame.sprite.spritecollideany(P1, obstacleGroup):
         window.fill(black)
         window.blit(gameOver, (150, 150))
         pygame.display.update()
         mixer.music.play()
-        time.sleep(4)
+        # time.sleep(4)
         pygame.quit()
 
     for obstacle in obstacleGroup:
@@ -137,10 +137,7 @@ while True:
         obstacle.draw(window)
 
     P1.update()
-
     P1.draw(window)
-    O1.draw(window)
-    O2.draw(window)
 
     pygame.display.update()
     framesPerSec.tick(FPS)
