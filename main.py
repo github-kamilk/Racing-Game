@@ -27,11 +27,6 @@ coinsPositons = [178, 353, 528]
 collected = False
 
 
-# class FuellBar():
-#     def __init__(self):
-#         self.Y = 0
-
-
 class Coins(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
