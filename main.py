@@ -27,6 +27,11 @@ coinsPositons = [178, 353, 528]
 collected = False
 
 
+# class FuellBar():
+#     def __init__(self):
+#         self.Y = 0
+
+
 class Coins(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
@@ -111,6 +116,22 @@ class Background():
         window.blit(self.backgroundImage, (self.bgX2, self.bgY2))
 
 
+def fuellHeight(fuell, collectedCoin):
+    if collectedCoin:
+        if fuell >= 5:
+            fuell -= 15
+        else:
+            fuell = 0
+
+    if fuell >= 105:
+        pygame.quit()
+        sys.exit()
+
+    fuell += 0.2
+
+    return fuell
+
+
 background = Background()
 
 # Zwieksz predkosc co 3s
@@ -130,19 +151,26 @@ obstacleGroup.add(Obstacle())
 obstacleGroup.add(Obstacle())
 obstacleGroup.add(Obstacle())
 
+fuellImage = pygame.image.load("data/scaledFuell.png")
+
 font = pygame.font.SysFont("Verdana", 60)
 gameOver = font.render("Game Over!", True, red)
 
 score = 0
+fuell = 0
 
 while True:
-    scoreRender = font.render("Score: " + str(score), True, red)
     background.update()
     background.render()
+
+    window.blit(fuellImage, (620, 0))
+    pygame.draw.rect(window, red, (SCREEN_WIDTH - 28, 8+fuell, 20, 105-fuell))
+    pygame.draw.rect(window, black, (SCREEN_WIDTH - 28, 8, 20, fuell))
 
     for event in pygame.event.get():
         if event.type == QUIT:
             pygame.quit()
+            sys.exit()
 
         # if event.type == INCREASE_SPEED:
         #     speed += 0.5
@@ -154,6 +182,7 @@ while True:
         mixer.music.play()
         # time.sleep(4)
         pygame.quit()
+        sys.exit()
 
     for obstacle in obstacleGroup:
         score = obstacle.move(score)
@@ -165,13 +194,14 @@ while True:
             collected = True
             coins.move(collected)
             window.blit(coins.image, coins.rect)
+            fuell = fuellHeight(fuell, True)
             collected = False
         coins.draw(window)
 
-
+    scoreRender = font.render("Score: " + str(score), True, red)
     window.blit(scoreRender, (0, 0))
     P1.update()
     P1.draw(window)
-
+    fuell = fuellHeight(fuell, False)
     pygame.display.update()
     framesPerSec.tick(FPS)
