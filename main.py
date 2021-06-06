@@ -10,11 +10,9 @@ window = pygame.display.set_mode((700, 750))
 window.fill(black)
 pygame.display.set_caption("Racing Game")
 
-def set_difficulty(value, difficulty):
-    # Do the job here !
-    pass
 
-def start_the_game():
+def start_the_game(difficulty):
+    print(difficulty)
     FPS = 30
     framesPerSec = pygame.time.Clock()
 
@@ -223,14 +221,25 @@ mytheme.background_color = myimage
 def mainMenu():
     menu = pygame_menu.Menu(750, 700, 'Welcome',
                             theme=mytheme)
-    menu.add.button('Play', start_the_game)
+    menu.add.button('Play', setDifficulty)
     menu.add.text_input('Name ', default='Player 1')
-    menu.add.selector('Difficulty ', [('Hard', 1), ('Medium', 2), ('Easy', 3)], onchange=set_difficulty)
     menu.add.button('How to play', howToPlay)
     menu.add.button('High scores', highScores)
     menu.add.button('Autors', about)
     menu.add.button('Quit', pygame_menu.events.EXIT)
 
+    menu.mainloop(window)
+
+def setDifficulty():
+    menu = pygame_menu.Menu(750, 700, 'How to play',
+                            theme=mytheme)
+    description = 'Choose difficulty'
+
+    menu.add.label(description, max_char=-1, font_size=20)
+    menu.add.button('Easy', start_the_game,1)
+    menu.add.button('Medium', start_the_game,2)
+    menu.add.button('Hard', start_the_game,3)
+    menu.add.button('Back', mainMenu)
     menu.mainloop(window)
 
 def howToPlay():
