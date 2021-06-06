@@ -16,7 +16,18 @@ def start_the_game(difficulty):
     FPS = 30
     framesPerSec = pygame.time.Clock()
 
-    speed = 5
+    if difficulty == 1:
+        speed = 5
+        playerSpeed = 8
+        fuellSpeed = 0.12
+    elif difficulty == 2:
+        speed = 5
+        playerSpeed = 8
+        fuellSpeed = 0.2
+    else:
+        speed = 8
+        playerSpeed = 10
+        fuellSpeed = 0.25
 
     SCREEN_WIDTH, SCREEN_HEIGHT = pygame.display.get_surface().get_size()
 
@@ -75,11 +86,11 @@ def start_the_game(difficulty):
 
             if self.rect.left > 80:
                 if pressedKeys[K_LEFT]:
-                    self.rect.move_ip(-8, 0)
+                    self.rect.move_ip(-playerSpeed, 0)
 
             if self.rect.right < SCREEN_WIDTH - 80:
                 if pressedKeys[K_RIGHT]:
-                    self.rect.move_ip(8, 0)
+                    self.rect.move_ip(playerSpeed, 0)
 
     class Background():
         def __init__(self):
@@ -119,7 +130,7 @@ def start_the_game(difficulty):
             pygame.quit()
             sys.exit()
 
-        fuell += 0.2
+        fuell += fuellSpeed
 
         return fuell
 
