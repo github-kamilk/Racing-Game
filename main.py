@@ -200,32 +200,68 @@ def start_the_game():
         pygame.display.update()
         framesPerSec.tick(FPS)
 
+#-----------------------------------------------------------------------
+# MENU
+#-----------------------------------------------------------------------
+
+
+font = pygame_menu.font.FONT_8BIT
+
+myimage = pygame_menu.baseimage.BaseImage(
+    image_path=("data/scaledMenu.png"),
+    drawing_mode=pygame_menu.baseimage.IMAGE_MODE_REPEAT_XY
+)
+
+mytheme = pygame_menu.themes.THEME_DARK.copy()
+mytheme.widget_font = font
+mytheme.title_bar_style = pygame_menu.widgets.MENUBAR_STYLE_SIMPLE
+mytheme.widget_alignment = pygame_menu.locals.ALIGN_CENTER
+mytheme.background_color = myimage
+
+
 
 def mainMenu():
-    font = pygame_menu.font.FONT_8BIT
-
-    myimage = pygame_menu.baseimage.BaseImage(
-        image_path=("data/scaledMenu.png"),
-        drawing_mode=pygame_menu.baseimage.IMAGE_MODE_REPEAT_XY
-    )
-
-    mytheme = pygame_menu.themes.THEME_DARK.copy()
-    mytheme.widget_font = font
-    mytheme.title_bar_style = pygame_menu.widgets.MENUBAR_STYLE_SIMPLE
-    mytheme.widget_alignment = pygame_menu.locals.ALIGN_CENTER
-    mytheme.background_color = myimage
-
     menu = pygame_menu.Menu(750, 700, 'Welcome',
                             theme=mytheme)
-
-
-    # menu.pygame_menu.widgets.MENUBAR_STYLE_UNDERLINE
-
     menu.add.button('Play', start_the_game)
     menu.add.text_input('Name ', default='Player 1')
     menu.add.selector('Difficulty ', [('Hard', 1), ('Medium', 2), ('Easy', 3)], onchange=set_difficulty)
+    menu.add.button('How to play', howToPlay)
+    menu.add.button('High scores', highScores)
+    menu.add.button('Autors', about)
     menu.add.button('Quit', pygame_menu.events.EXIT)
 
+    menu.mainloop(window)
+
+def howToPlay():
+    menu = pygame_menu.Menu(750, 700, 'How to play',
+                            theme=mytheme)
+    description= 'Collect coins\navoid obstacles\n'\
+                'Press LEFT RIGHT to move your car\n'\
+                'Remember about fuell'
+
+    menu.add.label(description, max_char=-1, font_size=20)
+    menu.add.button('Back', mainMenu)
+    menu.mainloop(window)
+
+def highScores():
+    menu = pygame_menu.Menu(750, 700, 'High Scores',
+                            theme=mytheme)
+    description= 'Collect coins\navoid obstacles\n'\
+                'Press LEFT RIGHT to move your car\n'\
+                'Remember about fuell'
+
+    menu.add.label(description, max_char=-1, font_size=20)
+    menu.add.button('Back', mainMenu)
+    menu.mainloop(window)
+
+def about():
+    menu = pygame_menu.Menu(750, 700, 'Autors',
+                            theme=mytheme)
+    description= 'Kamil Kowalski \n Matematyka stosowana I rok\n Programowanie'
+
+    menu.add.label(description, max_char=-1, font_size=20)
+    menu.add.button('Back', mainMenu)
     menu.mainloop(window)
 
 mainMenu()
