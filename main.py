@@ -137,8 +137,8 @@ def start_the_game(difficulty):
     background = Background()
 
     # Zwieksz predkosc co 3s
-    # INCREASE_SPEED = pygame.USEREVENT + 1
-    # pygame.time.set_timer(INCREASE_SPEED, 3000)
+    INCREASE_SPEED = pygame.USEREVENT + 1
+    pygame.time.set_timer(INCREASE_SPEED, 10000)
 
     P1 = Player()
     playerGroup = pygame.sprite.Group()
@@ -174,17 +174,15 @@ def start_the_game(difficulty):
                 pygame.quit()
                 sys.exit()
 
-            # if event.type == INCREASE_SPEED:
-            #     speed += 0.5
+            if event.type == INCREASE_SPEED:
+                speed += 0.2
 
         if pygame.sprite.spritecollideany(P1, obstacleGroup):
             window.fill(black)
             window.blit(gameOver, (150, 150))
             pygame.display.update()
             mixer.music.play()
-            # time.sleep(4)
-            #pygame.quit()
-            #sys.exit()
+            time.sleep(4)
             mainMenu()
 
         for obstacle in obstacleGroup:
