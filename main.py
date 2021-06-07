@@ -11,9 +11,13 @@ window.fill(black)
 pygame.display.set_caption("Racing Game")
 
 
+best_scores = []
+
 def start_the_game(difficulty):
-    print(difficulty)
     FPS = 30
+    score = 0
+    highScore = 0
+    fuell = 0
     framesPerSec = pygame.time.Clock()
 
     if difficulty == 1:
@@ -31,9 +35,13 @@ def start_the_game(difficulty):
 
     SCREEN_WIDTH, SCREEN_HEIGHT = pygame.display.get_surface().get_size()
 
+    fuellImage = pygame.image.load("data/scaledFuell.png")
+
+    font = pygame.font.SysFont("Verdana", 60)
+
     mixer.init()
     mixer.music.load("data/crash.mp3")
-    mixer.music.set_volume(0.0)
+    mixer.music.set_volume(0.05)
 
     obstaclesPositons = [95, 270, 445]
     coinsPositons = [178, 353, 528]
@@ -127,8 +135,19 @@ def start_the_game(difficulty):
                 fuell = 0
 
         if fuell >= 105:
-            pygame.quit()
-            sys.exit()
+            window.fill(black)
+            best_scores.append(score)
+            highScore = int(max(best_scores))
+            gameOver1 = font.render("Game Over!", True, red)
+            gameOver2 = font.render("Score: " + str(score), True, red)
+            gameOver3 = font.render("Highscore: " + str(highScore), True, red)
+            window.blit(gameOver1, (150, 150))
+            window.blit(gameOver2, (150, 250))
+            window.blit(gameOver3, (150, 250))
+            pygame.display.update()
+            mixer.music.play()
+            time.sleep(3)
+            mainMenu()
 
         fuell += fuellSpeed
 
@@ -153,13 +172,6 @@ def start_the_game(difficulty):
     obstacleGroup.add(Obstacle())
     obstacleGroup.add(Obstacle())
 
-    fuellImage = pygame.image.load("data/scaledFuell.png")
-
-    font = pygame.font.SysFont("Verdana", 60)
-    gameOver = font.render("Game Over!", True, red)
-
-    score = 0
-    fuell = 0
 
     while True:
         background.update()
@@ -179,10 +191,17 @@ def start_the_game(difficulty):
 
         if pygame.sprite.spritecollideany(P1, obstacleGroup):
             window.fill(black)
-            window.blit(gameOver, (150, 150))
+            best_scores.append(score)
+            highScore = int(max(best_scores))
+            gameOver1 = font.render("Game Over!", True, red)
+            gameOver2 = font.render("Score: " + str(score), True, red)
+            gameOver3 = font.render("Highscore: " + str(highScore), True, red)
+            window.blit(gameOver1, (150, 150))
+            window.blit(gameOver2, (150, 250))
+            window.blit(gameOver3, (150, 350))
             pygame.display.update()
             mixer.music.play()
-            time.sleep(4)
+            time.sleep(3)
             mainMenu()
 
         for obstacle in obstacleGroup:
@@ -199,6 +218,7 @@ def start_the_game(difficulty):
                 collected = False
             coins.draw(window)
 
+
         scoreRender = font.render("Score: " + str(score), True, red)
         window.blit(scoreRender, (0, 0))
         P1.update()
@@ -206,6 +226,8 @@ def start_the_game(difficulty):
         fuell = fuellHeight(fuell, False)
         pygame.display.update()
         framesPerSec.tick(FPS)
+
+
 
 #-----------------------------------------------------------------------
 # MENU
@@ -226,21 +248,17 @@ mytheme.widget_alignment = pygame_menu.locals.ALIGN_CENTER
 mytheme.background_color = myimage
 
 
-
 def mainMenu():
     menu = pygame_menu.Menu(750, 700, 'Welcome',
                             theme=mytheme)
     menu.add.button('Play', setDifficulty)
-    menu.add.text_input('Name ', default='Player 1')
     menu.add.button('How to play', howToPlay)
-    menu.add.button('High scores', highScores)
     menu.add.button('Autors', about)
     menu.add.button('Quit', pygame_menu.events.EXIT)
-
     menu.mainloop(window)
 
 def setDifficulty():
-    menu = pygame_menu.Menu(750, 700, 'How to play',
+    menu = pygame_menu.Menu(750, 700, 'Difficulty',
                             theme=mytheme)
     description = 'Choose difficulty'
 
@@ -262,16 +280,6 @@ def howToPlay():
     menu.add.button('Back', mainMenu)
     menu.mainloop(window)
 
-def highScores():
-    menu = pygame_menu.Menu(750, 700, 'High Scores',
-                            theme=mytheme)
-    description= 'Collect coins\navoid obstacles\n'\
-                'Press LEFT RIGHT to move your car\n'\
-                'Remember about fuell'
-
-    menu.add.label(description, max_char=-1, font_size=20)
-    menu.add.button('Back', mainMenu)
-    menu.mainloop(window)
 
 def about():
     menu = pygame_menu.Menu(750, 700, 'Autors',
