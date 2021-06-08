@@ -6,7 +6,6 @@ Kamil Kowalski
 Racing Game is a game in which the player's task is to collect coins and avoid obstacles.\
 Controls: press LEFT/RIGHT to move your car.\
 Game over: The game is over when car touches the obstacle or the fuell is over.\
-![image info](data/screen1.png)
 ![image info](data/screen2.png)
 
 ### Technologies
