@@ -6,9 +6,8 @@ Kamil Kowalski
 Racing Game is a game in which the player's task is to collect coins and avoid obstacles.\
 Controls: press LEFT/RIGHT to move your car.\
 Game over: The game is over when car touches the obstacle or the fuell is over.
-![Screenshot](data/screen1.png)\
-
-![Screenshot](data/screen2.png)
+![alt text](data\screen1.png)
+![alt text](data\screen2.png)
 
 ### Technologies
 **pygame** - Library that helps in creating computer games in Python. Provides meny helpful modules, such as displaying graphics, playing sounds, and operating keys.\
