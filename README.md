@@ -5,9 +5,9 @@ Kamil Kowalski
 ### Short description
 Racing Game is a game in which the player's task is to collect coins and avoid obstacles.\
 Controls: press LEFT/RIGHT to move your car.\
-Game over: The game is over when car touches the obstacle or the fuell is over.
-![alt text](data\screen1.png "Main Menu")
-![alt text](data\screen2.png "Game")
+Game over: The game is over when car touches the obstacle or the fuell is over.\
+![image info](data/screen1.png)
+![image info](data/screen2.png)
 
 ### Technologies
 **pygame** - Library that helps in creating computer games in Python. Provides meny helpful modules, such as displaying graphics, playing sounds, and operating keys.\
