@@ -14,38 +14,10 @@ pygame.display.set_caption("Racing Game")
 best_scores = []
 
 def start_the_game(difficulty):
-    FPS = 30
-    score = 0
-    highScore = 0
-    fuell = 0
-    framesPerSec = pygame.time.Clock()
 
-    if difficulty == 1:
-        speed = 5
-        playerSpeed = 8
-        fuellSpeed = 0.12
-    elif difficulty == 2:
-        speed = 5
-        playerSpeed = 8
-        fuellSpeed = 0.2
-    else:
-        speed = 8
-        playerSpeed = 10
-        fuellSpeed = 0.25
-
-    SCREEN_WIDTH, SCREEN_HEIGHT = pygame.display.get_surface().get_size()
-
-    fuellImage = pygame.image.load("data/scaledFuell.png")
-
-    font = pygame.font.SysFont("Verdana", 60)
-
-    mixer.init()
-    mixer.music.load("data/crash.mp3")
-    mixer.music.set_volume(0.05)
-
-    obstaclesPositons = [95, 270, 445]
-    coinsPositons = [178, 353, 528]
-    collected = False
+# -----------------------------------------------------------------------
+# CLASSES
+# -----------------------------------------------------------------------
 
     class Coins(pygame.sprite.Sprite):
         def __init__(self):
@@ -127,6 +99,42 @@ def start_the_game(difficulty):
             window.blit(self.backgroundImage, (self.bgX1, self.bgY1))
             window.blit(self.backgroundImage, (self.bgX2, self.bgY2))
 
+# -----------------------------------------------------------------------
+# AUXILIARY FUNCTIONS
+# -----------------------------------------------------------------------
+
+    FPS = 30
+    score = 0
+    fuell = 0
+    framesPerSec = pygame.time.Clock()
+
+    if difficulty == 1:
+        speed = 5
+        playerSpeed = 8
+        fuellSpeed = 0.12
+    elif difficulty == 2:
+        speed = 5
+        playerSpeed = 8
+        fuellSpeed = 0.2
+    else:
+        speed = 8
+        playerSpeed = 10
+        fuellSpeed = 0.25
+
+    SCREEN_WIDTH, SCREEN_HEIGHT = pygame.display.get_surface().get_size()
+
+    fuellImage = pygame.image.load("data/scaledFuell.png")
+
+    font = pygame.font.SysFont("8-Bit-Madness", 60)
+
+    mixer.init()
+    mixer.music.load("data/crash.mp3")
+    mixer.music.set_volume(0.05)
+
+    obstaclesPositons = [95, 270, 445]
+    coinsPositons = [178, 353, 528]
+    collected = False
+
     def fuellHeight(fuell, collectedCoin):
         if collectedCoin:
             if fuell >= 5:
@@ -141,12 +149,12 @@ def start_the_game(difficulty):
             gameOver1 = font.render("Game Over!", True, red)
             gameOver2 = font.render("Score: " + str(score), True, red)
             gameOver3 = font.render("Highscore: " + str(highScore), True, red)
-            window.blit(gameOver1, (150, 150))
-            window.blit(gameOver2, (150, 250))
-            window.blit(gameOver3, (150, 250))
+            window.blit(gameOver1, (220, 150))
+            window.blit(gameOver2, (220, 250))
+            window.blit(gameOver3, (220, 350))
             pygame.display.update()
             mixer.music.play()
-            time.sleep(3)
+            time.sleep(4)
             mainMenu()
 
         fuell += fuellSpeed
@@ -196,12 +204,12 @@ def start_the_game(difficulty):
             gameOver1 = font.render("Game Over!", True, red)
             gameOver2 = font.render("Score: " + str(score), True, red)
             gameOver3 = font.render("Highscore: " + str(highScore), True, red)
-            window.blit(gameOver1, (150, 150))
-            window.blit(gameOver2, (150, 250))
-            window.blit(gameOver3, (150, 350))
+            window.blit(gameOver1, (220, 150))
+            window.blit(gameOver2, (220, 250))
+            window.blit(gameOver3, (220, 350))
             pygame.display.update()
             mixer.music.play()
-            time.sleep(3)
+            time.sleep(4)
             mainMenu()
 
         for obstacle in obstacleGroup:

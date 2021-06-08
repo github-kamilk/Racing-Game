@@ -1,15 +1,23 @@
 # Game Title
+Racing Game
 ## Author:
 Kamil Kowalski
 ### Short description
-
+Racing Game is a game in which the player's task is to collect coins and avoid obstacles.\
+Controls: press LEFT/RIGHT to move your car.\
+Game over: The game is over when car touches the obstacle or the fuell is over.
+![Screenshot](screen1.png)
+![Screenshot](screen2.png)
 
 ### Technologies
-**name** - description
+**pygame** - Library that helps in creating computer games in Python. Provides meny helpful modules, such as displaying graphics, playing sounds, and operating keys.\
+**pygame_menu** -  Library that simplifies the creation of a menu for a game written with pygame module in Python.n
 
 ### How to run this app?
-1. Clone the template project, replacing my-project with the name of the project you are creating: 
-`git clone  https://github.com/github-anki/Game-Template.git my-project`
-`cd my-project `
+1. Clone the template project to your device:\
+`git clone  https://github.com/github-kamilk/Racing-Game.git Racing_Game`\
+`cd Racing_Game `
 2. Install the project's development and runtime requirements:
 `pip install -r requirements.txt`
+3. Run the game:
+ `python Racing_Game.py`
